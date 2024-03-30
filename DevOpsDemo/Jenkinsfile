@@ -13,7 +13,7 @@ pipeline {
 
         stage("Build the code") {
             steps {
-                dir('DevOpsDemo') {
+                dir('DevOps-Assignment/DevOpsDemo') {
                     sh "chmod +x ./mvnw"
                     sh "./mvnw clean package"
                 }
@@ -22,7 +22,7 @@ pipeline {
 
         stage('Create image for Docker') {
             steps {
-                dir('DevOpsDemo') {
+                dir('DevOps-Assignment/DevOpsDemo') {
                     sh 'docker build -t spring:consumedbackend .'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
         stage('Run the container') {
             steps {
 
-                dir('DevOpsDemo') {
+                dir('DevOps-Assignment/DevOpsDemo') {
                     sh 'docker run -p 5500:8080 spring:consumedbackend'
                 }
             }
