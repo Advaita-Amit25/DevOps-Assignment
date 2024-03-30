@@ -2,11 +2,15 @@ pipeline {
     agent any
 
     stages {
-
         stage('Code checkout according to environment') {
             steps {
                 script {
-                    checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'gtihub-credentials', url: 'https://github.com/Advaita-Amit25/DevOps-Assignment.git']])
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: '*/main']],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [[$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [[path: 'DevOps-Assignment/DevOpsDemo']]]],
+                              submoduleCfg: [],
+                              userRemoteConfigs: [[credentialsId: 'gtihub-credentials', url: 'https://github.com/Advaita-Amit25/DevOps-Assignment.git']]])
                 }
             }
         }
@@ -30,7 +34,6 @@ pipeline {
 
         stage('Run the container') {
             steps {
-
                 dir('DevOps-Assignment/DevOpsDemo') {
                     sh 'docker run -p 5500:8080 spring:consumedbackend'
                 }
