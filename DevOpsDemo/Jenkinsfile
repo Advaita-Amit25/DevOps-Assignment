@@ -10,26 +10,29 @@ pipeline {
                 }
             }
         }
-        stage("Build the code"){
-            steps{
-              sh "cd ./DevOpsDemo"
-              sh "chmod +x ./mvnw"
-              sh "./mvnw clean package"
+
+        stage("Build the code") {
+            steps {
+                dir('DevOpsDemo') {
+                    sh "chmod +x ./mvnw"
+                    sh "./mvnw clean package"
+                }
             }
         }
 
-
-        stage('create image for docker') {
-            steps{
-              sh "cd ./DevOpsDemo"
-              sh 'docker build -t spring:myApp .'
+        stage('Create image for Docker') {
+            steps {
+                dir('DevOpsDemo') {
+                    sh 'docker build -t spring:myApp .'
+                }
             }
         }
 
-        stage('Run the container'){
-            steps{
-              sh "cd ./DevOpsDemo"
-              sh 'docker run -p 5500:8090 spring:myApp'
+        stage('Run the container') {
+            steps {
+                dir('DevOpsDemo') {
+                    sh 'docker run -p 5500:8090 spring:myApp'
+                }
             }
         }
     }
