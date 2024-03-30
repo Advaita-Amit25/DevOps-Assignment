@@ -15,7 +15,6 @@ pipeline {
               sh "cd ./DevOpsDemo"
               sh "chmod +x ./mvnw"
               sh "./mvnw clean package"
-
             }
         }
 
