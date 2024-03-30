@@ -9,6 +9,6 @@ WORKDIR app/
 
 COPY ./target/*.jar ./
 
-EXPOSE 8080
+EXPOSE 5500
 
 CMD ["java", "-jar", "DevOpsDemo-0.0.1-SNAPSHOT.jar"]
