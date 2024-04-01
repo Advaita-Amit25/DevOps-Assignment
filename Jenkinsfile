@@ -31,7 +31,7 @@ pipeline {
         stage('Run the container') {
             steps {
                 dir('DevOpsDemo') {
-                    sh 'docker run -p 5500:8090 spring:myApp'
+                    sh 'docker run -p 8090:8090 spring:myApp'
                 }
             }
         }
