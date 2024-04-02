@@ -28,12 +28,18 @@ pipeline {
             }
         }
 
-        stage('Run the container') {
-            steps {
-                dir('DevOpsDemo') {
-                    sh 'docker run -p 8090:8090 spring:myApp'
-                }
+       
+ 	stage('Push the container'){
+            steps{
+              withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 		      	'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                sh 'echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin'
+                sh "docker push amitsaini25/spring:myApp"
+              }
             }
+
+
+
+
         }
     }
 }
