@@ -23,7 +23,7 @@ pipeline {
         stage('Create image for Docker') {
             steps {
                 dir('DevOpsDemo') {
-                    sh 'docker build -t spring:myApp .'
+                    sh 'docker build -t amitsaini25/spring-myApp:latest .'
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
             steps{
               withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable:'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                 sh 'echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin'
-                sh "docker push amitsaini25/spring:myApp"
+                sh "docker push amitsaini25/spring-myApp:latest"
               }
             }
 
